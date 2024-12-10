@@ -3,7 +3,7 @@ version: 0.2
 env:
   shell: bash
   variables:
-    INSTANCE_COUNT: 2   # number of QNX instances to launch
+    INSTANCE_COUNT: 3   # number of QNX instances to launch
     LIST_OF_INSTANCES: "list_of_instances.txt"
     ARGS: "arguments.txt"
     INSTS_ARGS: "insts_args.txt"
@@ -57,7 +57,7 @@ phases:
       # Run commands
       - for LINE in $(cat ${INSTS_ARGS});
         do HOST=$(echo ${LINE} | cut -d, -f1); ARG=$(echo ${LINE} | cut -d, -f2);
-        ssh -q -p 22 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@${HOST} "chmod u+x /root/app/*; /root/app/run_command.sh \"${ARG}\""; done
+        ssh -q -p 22 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@${HOST} "chmod u+x /root/app/*; /root/app/get_primes \"${ARG}\""; done
 
     finally:
       # Terraform destroy
